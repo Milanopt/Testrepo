@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Display Viewing Distance Calculator</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        label { display: block; margin-top: 10px; }
+        input { margin-left: 10px; }
+        button { margin-top: 15px; }
+        #result { margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+<h1>Display Viewing Distance Calculator</h1>
+<form id="viewForm">
+    <label>
+        Screen diagonal (inch):
+        <input type="number" step="any" id="diagonal" required>
+    </label>
+    <button type="submit">Calculate</button>
+</form>
+<div id="result"></div>
+<script>
+const ASPECT_WIDTH = 16;
+const ASPECT_HEIGHT = 9;
+function compute(diagonalInch) {
+    const diagonalMeters = diagonalInch * 0.0254;
+    const heightMeters = diagonalMeters * ASPECT_HEIGHT / Math.sqrt(ASPECT_WIDTH * ASPECT_WIDTH + ASPECT_HEIGHT * ASPECT_HEIGHT);
+    const widthMeters = heightMeters * ASPECT_WIDTH / ASPECT_HEIGHT;
+    const distance = Math.round(heightMeters * 5 * 10) / 10;
+    return { widthMeters, heightMeters, distance };
+}
+
+document.getElementById('viewForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const diag = parseFloat(document.getElementById('diagonal').value);
+    if (isNaN(diag) || diag <= 0) {
+        alert('Please enter a positive diagonal.');
+        return;
+    }
+    const res = compute(diag);
+    document.getElementById('result').textContent =
+        `Approximate size: ${(res.widthMeters*100).toFixed(1)} cm x ${(res.heightMeters*100).toFixed(1)} cm, ` +
+        `recommended viewing distance: ${res.distance.toFixed(1)} m`;
+});
+</script>
+</body>
+</html>
