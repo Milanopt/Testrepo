@@ -9,3 +9,9 @@ My repository to test new ideas
 1. Open `cable_cross_section.html` in your web browser.
 2. Enter the impedance (Ω), length (m), and the maximum loss (%) you are willing to tolerate.
 3. Click **Calculate** to see the required cross section in mm².
+
+### 100 V system calculator
+
+Below the first form, a second calculator lets you compute the cross section for constant 100 V systems.
+1. Enter the loudspeaker power in watts, the cable length (m), and the maximum loss (%).
+2. Click **Calculate** to see the required cross section in mm² for the 100 V line.
