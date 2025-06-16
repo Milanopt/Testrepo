@@ -4,19 +4,8 @@ My repository to test new ideas
 
 ## Cable cross section calculator
 
-`cable_cross_section.py` computes the required cable cross sectional area for a
-specified impedance and length. The impedance range 1–16 Ω is supported. Run it
-like this:
+`cable_cross_section.html` lets you compute the required cable cross sectional area for a specified impedance and length. Open the file in a browser and enter your values. The impedance range 1–16 Ω is supported.
 
-```bash
-python cable_cross_section.py <impedance_ohm> <length_m>
-```
-
-Example:
-
-```bash
-python cable_cross_section.py 8 50
-```
-
-This uses the resistivity of copper by default (1.68e-8 Ω·m). Use the
-`--resistivity` option to specify a different material.
+1. Open `cable_cross_section.html` in your web browser.
+2. Enter the impedance (Ω), length (m), and optionally the resistivity (Ω·m, default is 1.68e-8 for copper).
+3. Click **Calculate** to see the required cross section in mm².

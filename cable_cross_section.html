@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cable Cross Section Calculator</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        label { display: block; margin-top: 10px; }
+        input { margin-left: 10px; }
+        button { margin-top: 15px; }
+        #result { margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+<h1>Cable Cross Section Calculator</h1>
+<form id="calcForm">
+    <label>
+        Impedance (Ω) 1-16:
+        <input type="number" step="any" id="impedance" required>
+    </label>
+    <label>
+        Length (m):
+        <input type="number" step="any" id="length" required>
+    </label>
+    <label>
+        Resistivity (Ω·m):
+        <input type="number" step="any" id="resistivity" value="1.68e-8">
+    </label>
+    <button type="submit">Calculate</button>
+</form>
+<div id="result"></div>
+<script>
+function crossSection(impedance, length, resistivity) {
+    return resistivity * length / impedance * 1e6;
+}
+
+document.getElementById('calcForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const impedance = parseFloat(document.getElementById('impedance').value);
+    const length = parseFloat(document.getElementById('length').value);
+    const resistivity = parseFloat(document.getElementById('resistivity').value);
+
+    if (isNaN(impedance) || impedance < 1 || impedance > 16) {
+        alert('Impedance must be between 1 and 16 Ω');
+        return;
+    }
+
+    const area = crossSection(impedance, length, resistivity);
+    document.getElementById('result').textContent =
+        'Required cross section: ' + area.toFixed(3) + ' mm²';
+});
+</script>
+</body>
+</html>
