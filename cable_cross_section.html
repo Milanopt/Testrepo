@@ -29,6 +29,7 @@
     <button type="submit">Calculate</button>
 </form>
 <div id="result"></div>
+<button id="saveButton" type="button">Save Calculation</button>
 
 <h2>100 V System Calculator</h2>
 <form id="calc100vForm">
@@ -60,11 +61,11 @@ function crossSectionFromPower(power, length, lossPercent) {
     return crossSection(impedance, length, lossPercent);
 }
 
-document.getElementById('calcForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const impedance = parseFloat(document.getElementById('impedance').value);
-    const length = parseFloat(document.getElementById('length').value);
-    const loss = parseFloat(document.getElementById('loss').value);
+  document.getElementById('calcForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const impedance = parseFloat(document.getElementById('impedance').value);
+      const length = parseFloat(document.getElementById('length').value);
+      const loss = parseFloat(document.getElementById('loss').value);
 
     if (isNaN(impedance) || impedance < 1 || impedance > 16) {
         alert('Impedance must be between 1 and 16 Ω');
@@ -76,10 +77,24 @@ document.getElementById('calcForm').addEventListener('submit', function(e) {
         return;
     }
 
-    const area = crossSection(impedance, length, loss);
-    document.getElementById('result').textContent =
-        'Required cross section: ' + area.toFixed(3) + ' mm²';
-});
+      const area = crossSection(impedance, length, loss);
+      document.getElementById('result').textContent =
+          'Required cross section: ' + area.toFixed(3) + ' mm²';
+  });
+
+  document.getElementById('saveButton').addEventListener('click', function() {
+      const text = document.getElementById('result').textContent;
+      if (!text) {
+          alert('No result to save.');
+          return;
+      }
+      const blob = new Blob([text], { type: 'text/plain' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'cable_cross_section.txt';
+      link.click();
+      URL.revokeObjectURL(link.href);
+  });
 
 document.getElementById('calc100vForm').addEventListener('submit', function(e) {
     e.preventDefault();
